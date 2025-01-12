@@ -53,9 +53,8 @@
 		localStorage.setItem("finalBalance", JSON.stringify(finalBalance));
 	}
 
-	function round(places) {
-    const factor = "1" + "0".repeat(places);
-    return function(n)  { return Math.round(n * factor) / factor; }
+	function round8(n) {
+		return Math.round(n * 10000000) / 10000000;
 	}
 
 	function total() {
@@ -64,9 +63,6 @@
 			return res
 		}, 0);
 	}
-
-  const round5 = round(5);
-  const round8 = round(8);
 </script>
 
 <div class="container">

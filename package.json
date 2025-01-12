@@ -5,8 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
-    "build": "vite build && cp -R build/_app . && cp build/index.html .",
+    "build": "vite build",
     "preview": "vite preview",
+    "copy-build": "cp -R build/_app build/index.html .",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
   },
@@ -18,8 +19,5 @@
     "svelte-check": "^4.0.0",
     "typescript": "^5.0.0",
     "vite": "^6.0.0"
-  },
-  "dependencies": {
-    "@sveltejs/adapter-static": "^3.0.8"
   }
 }
