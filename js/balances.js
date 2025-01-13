@@ -81,7 +81,7 @@ function BalancesForm(props) {
   const round8 = round(8);
 
   return html`<div class="container">
-    <h1 class="text-center mt-5 mb-5">Balance Calculator</h1>
+    <h1 class="text-center mt-5 mb-5">Balance Compare</h1>
     <div class="row mb-3 text-secondary">
       <div class="col">Asset</div>
       <div class="col">USDT Price</div>
