@@ -66,6 +66,21 @@ function BalancesForm(props) {
     localStorage.setItem('finalBalances', JSON.stringify(newBalances)); // Set the new state
   }
 
+  const round = (places) => (n) => {
+    const powerOfTen = "1" + "0".repeat(places);
+    return Math.round(n * powerOfTen) / powerOfTen;
+  }
+
+  const total = () => {
+		return finalBalances.reduce((res, finalBal, i) => {
+			res = res + ((finalBal - initialBalances[i])*usdtPrices[i]);
+			return res
+		}, 0);
+	}
+
+  const round5 = round(5);
+  const round8 = round(8);
+
   return html`<div class="container">
     <h1 class="text-center mt-5 mb-5">Balance Calculator</h1>
     <div class="row mb-3 text-secondary">
@@ -90,8 +105,8 @@ function BalancesForm(props) {
         <div class="col">
           <input type="text" class="asset-final form-control" onInput=${(ev) => updateFinalBalances(0, ev)} value=${finalBalances[0]} />
         </div>
-        <div class="col"></div>
-        <div class="col"></div>
+        <div class="col diff">${round5(finalBalances[0]-initialBalances[0])}</div>
+        <div class="col profit">${round5((finalBalances[0]-initialBalances[0])*usdtPrices[0])}</div>
       </div>
       <div class="row mb-3">
         <div class="col">
@@ -106,8 +121,8 @@ function BalancesForm(props) {
         <div class="col">
           <input type="text" class="asset-final form-control" onInput=${(ev) => updateFinalBalances(1, ev)} value=${finalBalances[1]} />
         </div>
-        <div class="col"></div>
-        <div class="col"></div>
+        <div class="col diff">${round5(finalBalances[1]-initialBalances[1])}</div>
+        <div class="col profit">${round5((finalBalances[1]-initialBalances[1])*usdtPrices[1])}</div>
       </div>
       <div class="row mb-3">
         <div class="col">
@@ -122,8 +137,8 @@ function BalancesForm(props) {
         <div class="col">
           <input type="text" class="asset-final form-control" onInput=${(ev) => updateFinalBalances(2, ev)} value=${finalBalances[2]} />
         </div>
-        <div class="col"></div>
-        <div class="col"></div>
+        <div class="col diff">${round5(finalBalances[2]-initialBalances[2])}</div>
+        <div class="col profit">${round5((finalBalances[2]-initialBalances[2])*usdtPrices[2])}</div>
       </div>
       <div class="row mb-3">
         <div class="col">
@@ -138,8 +153,8 @@ function BalancesForm(props) {
         <div class="col">
           <input type="text" class="asset-final form-control" onInput=${(ev) => updateFinalBalances(3, ev)} value=${finalBalances[3]} />
         </div>
-        <div class="col"></div>
-        <div class="col"></div>
+        <div class="col diff">${round5(finalBalances[3]-initialBalances[3])}</div>
+        <div class="col profit">${round5((finalBalances[3]-initialBalances[3])*usdtPrices[3])}</div>
       </div>
     </form>
     <div class="row">
@@ -147,7 +162,7 @@ function BalancesForm(props) {
         <h3>TOTAL</h3>
       </div>
       <div class="col-1">
-        <h3 class="text-secondary"></h3>
+        <h3 class="text-secondary">${round5(total())}</h3>
       </div>
     </div>
   </div>`;
