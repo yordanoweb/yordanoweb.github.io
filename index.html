@@ -12,15 +12,21 @@
     <script>
       // Create a global "html" to use inside components
       let html;
+      // Create a global "useState" to use inside components
+      let _useState;
     </script>
     <script src="js/balances.js"></script>
     <script type="module">
       // Load global modules
       import { h, render } from 'https://esm.sh/preact';
+      import { useState } from 'https://esm.sh/preact/hooks';
       import htm from 'https://esm.sh/htm';
 
       // Initialize htm with Preact
       html = htm.bind(h);
+
+      // Set the global _useState
+      _useState = useState;
 
       // Render the balances form component
       render(html`<${BalancesForm} />`, document.getElementById('balances-form'));

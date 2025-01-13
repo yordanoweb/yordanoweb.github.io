@@ -1,33 +1,36 @@
 function BalancesForm(props) {
   const defaultAssets = ['BNB', 'Asset1', 'Asset2', 'Asset3'];
   const defaultUsdtPrices = ['0', '0', '0', '0'];
+
   const storedAssets = localStorage.getItem('assets');
   const storedUsdtPrices = localStorage.getItem('usdtPrices');
 
-  let assets = storedAssets ? JSON.parse(storedAssets) : defaultAssets;
-  let usdtPrices = storedUsdtPrices ? JSON.parse(storedUsdtPrices) : defaultUsdtPrices;
+  const [assets, setAssets] = storedAssets ? _useState(JSON.parse(storedAssets)) : _useState(defaultAssets);
+  const [usdtPrices, setUsdtPrices] = storedUsdtPrices ? _useState(JSON.parse(storedUsdtPrices)) : _useState(defaultUsdtPrices);
 
   // Optionally validate the parsed assets
   if (!Array.isArray(assets)) {
     console.error("Parsed assets should be an array");
-    assets = [...defaultAssets];
+    setAssets(defaultAssets);
   }
 
   // Optionally validate the parsed USDT prices 
   if (!Array.isArray(usdtPrices)) {
     console.error("Parsed USDT prices should be an array");
-    usdtPrices = [...defaultUsdtPrices];
+    setUsdtPrices(defaultUsdtPrices);
   }
 
   const updateAssets = (index, ev) => {
     const newAssets = [...assets]; // Create a copy of the current values
     newAssets[index] = ev.target.value; // Update the specific index with the new value
+    setAssets(newAssets);
     localStorage.setItem('assets', JSON.stringify(newAssets)); // Set the new state
   }
 
   const updateUsdtPrices = (index, ev) => {
     const newPrices = [...usdtPrices]; // Create a copy of the current values
     newPrices[index] = ev.target.value; // Update the specific index with the new value
+    setUsdtPrices(newPrices);
     localStorage.setItem('usdtPrices', JSON.stringify(newPrices)); // Set the new state
   }
 
