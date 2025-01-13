@@ -9,13 +9,13 @@ function BalancesForm(props) {
   const updateAssets = (index, ev) => {
     const newAssets = [...assets]; // Create a copy of the current values
     newAssets[index] = ev.target.value; // Update the specific index with the new value
-    localStorage.setItem('assets', newAssets); // Set the new state
+    localStorage.setItem('assets', JSON.stringify(newAssets)); // Set the new state
   }
 
   const updateUsdtPrices = (index, ev) => {
     const newPrices = [...usdtPrices]; // Create a copy of the current values
     newPrices[index] = ev.target.value; // Update the specific index with the new value
-    localStorage.setItem('usdtPrices', newPrices); // Set the new state
+    localStorage.setItem('usdtPrices', JSON.stringify(newPrices)); // Set the new state
   }
 
   // Optionally validate the parsed result
