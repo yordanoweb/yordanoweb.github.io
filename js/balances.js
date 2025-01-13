@@ -67,8 +67,7 @@ function BalancesForm(props) {
   }
 
   const round = (places) => (n) => {
-    const powerOfTen = "1" + "0".repeat(places);
-    return Math.round(n * powerOfTen) / powerOfTen;
+    return n.toFixed(places);
   }
 
   const total = () => {
