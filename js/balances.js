@@ -77,93 +77,111 @@ function BalancesForm(props) {
 		}, 0);
 	}
 
+  const initialInUSDT = () => {
+		return initialBalances.reduce((res, initialBal, i) => {
+			res = res + (initialBal*usdtPrices[i]);
+			return res
+		}, 0).toFixed(5);
+  }
+
+  const finalInUSDT = () => {
+		return finalBalances.reduce((res, finalBal, i) => {
+			res = res + (finalBal*usdtPrices[i]);
+			return res
+		}, 0).toFixed(5);
+  }
+
   const round5 = round(5);
   const round8 = round(8);
 
-  return html`<div class="container">
+  return html`
+  <div class="container">
     <h1 class="text-center mt-5 mb-5">Balance Compare</h1>
-    <div class="row mb-3 text-secondary">
-      <div class="col">Asset</div>
-      <div class="col">USDT Price</div>
-      <div class="col">Initial</div>
-      <div class="col">Final</div>
-      <div class="col">Diff</div>
-      <div class="col">Profit/Loss</div>
-    </div>
-    <form id="balance-form">
-      <div class="row mb-3">
-        <div class="col">
-          <input type="text" class="asset-input form-control" onInput=${(ev) => updateAssets(0, ev)} value=${assets[0]} />
-        </div>
-        <div class="col">
-          <input type="text" class="asset-usdt form-control" onInput=${(ev) => updateUsdtPrices(0, ev)} value=${usdtPrices[0]} />
-        </div>
-        <div class="col">
-          <input type="text" class="asset-initial form-control" onInput=${(ev) => updateInitialBalances(0, ev)} value=${initialBalances[0]} />
-        </div>
-        <div class="col">
-          <input type="text" class="asset-final form-control" onInput=${(ev) => updateFinalBalances(0, ev)} value=${finalBalances[0]} />
-        </div>
-        <div class="col diff pt-1">${round8(finalBalances[0]-initialBalances[0])}</div>
-        <div class="col profit pt-1">${round5((finalBalances[0]-initialBalances[0])*usdtPrices[0])}</div>
-      </div>
-      <div class="row mb-3">
-        <div class="col">
-          <input type="text" class="asset-input form-control" onInput=${(ev) => updateAssets(1, ev)} value=${assets[1]} />
-        </div>
-        <div class="col">
-          <input type="text" class="asset-usdt-input form-control" onInput=${(ev) => updateUsdtPrices(1, ev)} value=${usdtPrices[1]} />
-        </div>
-        <div class="col">
-          <input type="text" class="asset-initial form-control" onInput=${(ev) => updateInitialBalances(1, ev)} value=${initialBalances[1]} />
-        </div>
-        <div class="col">
-          <input type="text" class="asset-final form-control" onInput=${(ev) => updateFinalBalances(1, ev)} value=${finalBalances[1]} />
-        </div>
-        <div class="col diff pt-1">${round8(finalBalances[1]-initialBalances[1])}</div>
-        <div class="col profit pt-1">${round5((finalBalances[1]-initialBalances[1])*usdtPrices[1])}</div>
-      </div>
-      <div class="row mb-3">
-        <div class="col">
-          <input type="text" class="asset-input form-control" onInput=${(ev) => updateAssets(2, ev)} value=${assets[2]} />
-        </div>
-        <div class="col">
-          <input type="text" class="asset-usdt-input form-control" onInput=${(ev) => updateUsdtPrices(2, ev)} value=${usdtPrices[2]} />
-        </div>
-        <div class="col">
-          <input type="text" class="asset-initial form-control" onInput=${(ev) => updateInitialBalances(2, ev)} value=${initialBalances[2]} />
-        </div>
-        <div class="col">
-          <input type="text" class="asset-final form-control" onInput=${(ev) => updateFinalBalances(2, ev)} value=${finalBalances[2]} />
-        </div>
-        <div class="col diff pt-1">${round8(finalBalances[2]-initialBalances[2])}</div>
-        <div class="col profit pt-1">${round5((finalBalances[2]-initialBalances[2])*usdtPrices[2])}</div>
-      </div>
-      <div class="row mb-3">
-        <div class="col">
-          <input type="text" class="asset-input form-control" onInput=${(ev) => updateAssets(3, ev)} value=${assets[3]} />
-        </div>
-        <div class="col">
-          <input type="text" class="asset-usdt-input form-control" onInput=${(ev) => updateUsdtPrices(3, ev)} value=${usdtPrices[3]} />
-        </div>
-        <div class="col">
-          <input type="text" class="asset-initial form-control" onInput=${(ev) => updateInitialBalances(3, ev)} value=${initialBalances[3]} />
-        </div>
-        <div class="col">
-          <input type="text" class="asset-final form-control" onInput=${(ev) => updateFinalBalances(3, ev)} value=${finalBalances[3]} />
-        </div>
-        <div class="col diff pt-1">${round8(finalBalances[3]-initialBalances[3])}</div>
-        <div class="col profit pt-1">${round5((finalBalances[3]-initialBalances[3])*usdtPrices[3])}</div>
-      </div>
-    </form>
-    <div class="row">
-      <div class="col-10">
-        <h3>TOTAL</h3>
-      </div>
-      <div class="col-1">
-        <h3 class="text-secondary">${round5(total())}</h3>
-      </div>
-    </div>
-  </div>`;
+    <table class="table table-borderless">
+      <thead>
+        <tr class="text-secondary">
+          <th>Asset</th>
+          <th>USDT Price</th>
+          <th>Initial</th>
+          <th>Final</th>
+          <th>Diff</th>
+          <th>Profit/Loss</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <input type="text" class="asset-input form-control" onInput=${(ev) => updateAssets(0, ev)} value=${assets[0]} />
+          </td>
+          <td>
+            <input type="text" class="asset-usdt form-control" onInput=${(ev) => updateUsdtPrices(0, ev)} value=${usdtPrices[0]} />
+          </td>
+          <td>
+            <input type="text" class="asset-initial form-control" onInput=${(ev) => updateInitialBalances(0, ev)} value=${initialBalances[0]} />
+          </td>
+          <td>
+            <input type="text" class="asset-final form-control" onInput=${(ev) => updateFinalBalances(0, ev)} value=${finalBalances[0]} />
+          </td>
+          <td class="diff pt-1">${round8(finalBalances[0] - initialBalances[0])}</td>
+          <td class="profit pt-1">${round5((finalBalances[0] - initialBalances[0]) * usdtPrices[0])}</td>
+        </tr>
+        <tr>
+          <td>
+            <input type="text" class="asset-input form-control" onInput=${(ev) => updateAssets(1, ev)} value=${assets[1]} />
+          </td>
+          <td>
+            <input type="text" class="asset-usdt-input form-control" onInput=${(ev) => updateUsdtPrices(1, ev)} value=${usdtPrices[1]} />
+          </td>
+          <td>
+            <input type="text" class="asset-initial form-control" onInput=${(ev) => updateInitialBalances(1, ev)} value=${initialBalances[1]} />
+          </td>
+          <td>
+            <input type="text" class="asset-final form-control" onInput=${(ev) => updateFinalBalances(1, ev)} value=${finalBalances[1]} />
+          </td>
+          <td class="diff pt-1">${round8(finalBalances[1] - initialBalances[1])}</td>
+          <td class="profit pt-1">${round5((finalBalances[1] - initialBalances[1]) * usdtPrices[1])}</td>
+        </tr>
+        <tr>
+          <td>
+            <input type="text" class="asset-input form-control" onInput=${(ev) => updateAssets(2, ev)} value=${assets[2]} />
+          </td>
+          <td>
+            <input type="text" class="asset-usdt-input form-control" onInput=${(ev) => updateUsdtPrices(2, ev)} value=${usdtPrices[2]} />
+          </td>
+          <td>
+            <input type="text" class="asset-initial form-control" onInput=${(ev) => updateInitialBalances(2, ev)} value=${initialBalances[2]} />
+          </td>
+          <td>
+            <input type="text" class="asset-final form-control" onInput=${(ev) => updateFinalBalances(2, ev)} value=${finalBalances[2]} />
+          </td>
+          <td class="diff pt-1">${round8(finalBalances[2] - initialBalances[2])}</td>
+          <td class="profit pt-1">${round5((finalBalances[2] - initialBalances[2]) * usdtPrices[2])}</td>
+        </tr>
+        <tr>
+          <td>
+            <input type="text" class="asset-input form-control" onInput=${(ev) => updateAssets(3, ev)} value=${assets[3]} />
+          </td>
+          <td>
+            <input type="text" class="asset-usdt-input form-control" onInput=${(ev) => updateUsdtPrices(3, ev)} value=${usdtPrices[3]} />
+          </td>
+          <td>
+            <input type="text" class="asset-initial form-control" onInput=${(ev) => updateInitialBalances(3, ev)} value=${initialBalances[3]} />
+          </td>
+          <td>
+            <input type="text" class="asset-final form-control" onInput=${(ev) => updateFinalBalances(3, ev)} value=${finalBalances[3]} />
+          </td>
+          <td class="diff pt-1">${round8(finalBalances[3] - initialBalances[3])}</td>
+          <td class="profit pt-1">${round5((finalBalances[3] - initialBalances[3]) * usdtPrices[3])}</td>
+        </tr>
+        <tr>
+          <td class="h3 text-secondary" colspan="2">TOTAL</td>
+          <td class="h4 text-secondary">${initialInUSDT()}</td>
+          <td class="h4 text-secondary">${finalInUSDT()}</td>
+          <td class="h4 text-secondary text-end" colspan="2">${round5(total())}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  `
 }
 
