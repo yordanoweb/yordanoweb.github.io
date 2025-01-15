@@ -174,10 +174,10 @@ function BalancesForm(props) {
           <td class="profit pt-1">${round5((finalBalances[3] - initialBalances[3]) * usdtPrices[3])}</td>
         </tr>
         <tr>
-          <td class="h3 text-secondary" colspan="2">TOTAL</td>
-          <td class="h4 text-secondary">${initialInUSDT()}</td>
-          <td class="h4 text-secondary">${finalInUSDT()}</td>
-          <td class="h4 text-secondary text-end" colspan="2">${round5(total())}</td>
+          <td class="h3 p-2" colspan="2">TOTAL</td>
+          <td class="h5 text-secondary"><div class="ps-2">${initialInUSDT()}</div></td>
+          <td class="h5 text-secondary"><div class="ps-2">${finalInUSDT()}</div></td>
+          <td class="h4 text-end" colspan="2"><div class="pe-3">${round5(total())}</div></td>
         </tr>
       </tbody>
     </table>
