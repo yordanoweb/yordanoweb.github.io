@@ -179,7 +179,7 @@ function BalancesForm(props) {
           <td class="h5 text-secondary"><div class="ps-2">${initialInUSDT()}</div></td>
           <td class="h5 text-secondary"><div class="ps-2">${finalInUSDT()}</div></td>
           <td class=""></td>
-          <td class="h4 text-end"><div class="pe-3">${round5(total())}</div></td>
+          <td class="h4">${round5(total())}</td>
         </tr>
       </tbody>
     </table>
