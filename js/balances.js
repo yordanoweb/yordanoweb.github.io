@@ -122,8 +122,8 @@ function BalancesForm(props) {
           <td>
             <input type="text" class="asset-final form-control" onInput=${(ev) => updateFinalBalances(0, ev)} value=${finalBalances[0]} />
           </td>
-          <td class="diff pt-1">${round8(finalBalances[0] - initialBalances[0])}</td>
-          <td class="profit pt-1">${round5((finalBalances[0] - initialBalances[0]) * usdtPrices[0])}</td>
+          <td class="diff align-middle">${round8(finalBalances[0] - initialBalances[0])}</td>
+          <td class="profit align-middle">${round5((finalBalances[0] - initialBalances[0]) * usdtPrices[0])}</td>
         </tr>
         <tr>
           <td>
@@ -138,8 +138,8 @@ function BalancesForm(props) {
           <td>
             <input type="text" class="asset-final form-control" onInput=${(ev) => updateFinalBalances(1, ev)} value=${finalBalances[1]} />
           </td>
-          <td class="diff pt-1">${round8(finalBalances[1] - initialBalances[1])}</td>
-          <td class="profit pt-1">${round5((finalBalances[1] - initialBalances[1]) * usdtPrices[1])}</td>
+          <td class="diff align-middle">${round8(finalBalances[1] - initialBalances[1])}</td>
+          <td class="profit align-middle">${round5((finalBalances[1] - initialBalances[1]) * usdtPrices[1])}</td>
         </tr>
         <tr>
           <td>
@@ -154,8 +154,8 @@ function BalancesForm(props) {
           <td>
             <input type="text" class="asset-final form-control" onInput=${(ev) => updateFinalBalances(2, ev)} value=${finalBalances[2]} />
           </td>
-          <td class="diff pt-1">${round8(finalBalances[2] - initialBalances[2])}</td>
-          <td class="profit pt-1">${round5((finalBalances[2] - initialBalances[2]) * usdtPrices[2])}</td>
+          <td class="diff align-middle">${round8(finalBalances[2] - initialBalances[2])}</td>
+          <td class="profit align-middle">${round5((finalBalances[2] - initialBalances[2]) * usdtPrices[2])}</td>
         </tr>
         <tr>
           <td>
@@ -170,8 +170,8 @@ function BalancesForm(props) {
           <td>
             <input type="text" class="asset-final form-control" onInput=${(ev) => updateFinalBalances(3, ev)} value=${finalBalances[3]} />
           </td>
-          <td class="diff pt-1">${round8(finalBalances[3] - initialBalances[3])}</td>
-          <td class="profit pt-1">${round5((finalBalances[3] - initialBalances[3]) * usdtPrices[3])}</td>
+          <td class="diff align-middle">${round8(finalBalances[3] - initialBalances[3])}</td>
+          <td class="profit align-middle">${round5((finalBalances[3] - initialBalances[3]) * usdtPrices[3])}</td>
         </tr>
         <tr>
           <td class="h3 p-2">TOTAL</td>
