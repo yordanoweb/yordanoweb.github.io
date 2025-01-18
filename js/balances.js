@@ -43,53 +43,53 @@ function BalancesForm(props) {
     newAssets[index] = ev.target.value; // Update the specific index with the new value
     setAssets(newAssets);
     localStorage.setItem('assets', JSON.stringify(newAssets)); // Set the new state
-  }
+  };
 
   const updateUsdtPrices = (index, ev) => {
     const newPrices = [...usdtPrices]; // Create a copy of the current values
     newPrices[index] = ev.target.value; // Update the specific index with the new value
     setUsdtPrices(newPrices);
     localStorage.setItem('usdtPrices', JSON.stringify(newPrices)); // Set the new state
-  }
+  };
 
   const updateInitialBalances = (index, ev) => {
     const newBalances = [...initialBalances]; // Create a copy of the current values
     newBalances[index] = ev.target.value; // Update the specific index with the new value
     setInitialBalances(newBalances);
     localStorage.setItem('initialBalances', JSON.stringify(newBalances)); // Set the new state
-  }
+  };
 
   const updateFinalBalances = (index, ev) => {
     const newBalances = [...finalBalances]; // Create a copy of the current values
     newBalances[index] = ev.target.value; // Update the specific index with the new value
     setFinalBalances(newBalances);
     localStorage.setItem('finalBalances', JSON.stringify(newBalances)); // Set the new state
-  }
+  };
 
   const round = (places) => (n) => {
     return n.toFixed(places);
-  }
+  };
 
   const total = () => {
 		return finalBalances.reduce((res, finalBal, i) => {
 			res = res + ((finalBal - initialBalances[i])*usdtPrices[i]);
 			return res
 		}, 0);
-	}
+	};
 
   const initialInUSDT = () => {
 		return initialBalances.reduce((res, initialBal, i) => {
 			res = res + (initialBal*usdtPrices[i]);
 			return res
 		}, 0).toFixed(5);
-  }
+  };
 
   const finalInUSDT = () => {
 		return finalBalances.reduce((res, finalBal, i) => {
 			res = res + (finalBal*usdtPrices[i]);
 			return res
 		}, 0).toFixed(5);
-  }
+  };
 
   const round5 = round(5);
   const round8 = round(8);
@@ -99,6 +99,38 @@ function BalancesForm(props) {
     "usdtPrices": [0,0,0,0],
     "initialBalances": [0,0,0,0],
     "finalBalances": [0,0,0,0]
+  };
+
+  const pasteSavedData = (ev) => {
+    const expectedProperties = ['assets', 'usdtPrices', 'initialBalances', 'finalBalances'];
+    const rawJSON = ev.clipboardData.getData("text");
+    let parsedJSON;
+
+    try {
+      parsedJSON = JSON.parse(rawJSON);
+    } catch (jsonParseEx) {
+      alert("Pasted data does not have the right format");
+      return;
+    }
+
+    const objectCorrectlyFormatted = expectedProperties.reduce((acc, prop) => {
+      const propertyExists = prop in parsedJSON;
+      const isArray = Array.isArray(parsedJSON[prop]);
+      const hasLengthFour = isArray && parsedJSON[prop].length === 4;
+      return acc && propertyExists && isArray && hasLengthFour;
+    }, true);
+
+    if (!objectCorrectlyFormatted) {
+      alert("There are missing properties at pasted data");
+      return;
+    }
+
+    // Save the new state
+    localStorage.setItem('assets', JSON.stringify(parsedJSON.assets));
+    localStorage.setItem('usdtPrices', JSON.stringify(parsedJSON.usdtPrices));
+    localStorage.setItem('initialBalances', JSON.stringify(parsedJSON.initialBalances));
+    localStorage.setItem('finalBalances', JSON.stringify(parsedJSON.finalBalances));
+
   };
 
   return html`
@@ -191,7 +223,8 @@ function BalancesForm(props) {
       </tbody>
     </table>
     <div class="row m-2">
-      <textarea class="form-control" id="initial-data" rows="3" placeholder="Paste saved data here with this format:\n\n${JSON.stringify(exampleData)}"></textarea>
+      <textarea class="form-control" id="initial-data" rows="3" placeholder="Paste saved data here with this format:\n\n${JSON.stringify(exampleData)}"
+        onPaste=${(ev) => pasteSavedData(ev)}></textarea>
     </div>
   </div>
   `
