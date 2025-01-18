@@ -94,6 +94,13 @@ function BalancesForm(props) {
   const round5 = round(5);
   const round8 = round(8);
 
+  const exampleData = {
+    "assets": ["BNB","BTC","ETH","USDT"],
+    "usdtPrices": [0,0,0,0],
+    "initialBalances": [0,0,0,0],
+    "finalBalances": [0,0,0,0]
+  };
+
   return html`
   <div class="container">
     <h1 class="text-center mt-5 mb-5">Balance Compare</h1>
@@ -183,6 +190,10 @@ function BalancesForm(props) {
         </tr>
       </tbody>
     </table>
+    <div class="row m-2">
+      <label for="initial-data" class="form-label m-0 p-0 text-secondary">Raw balances data</label>
+      <textarea class="form-control" id="initial-data" rows="3" placeholder="Paste here with this format:\n\n${JSON.stringify(exampleData)}"></textarea>
+    </div>
   </div>
   `
 }
