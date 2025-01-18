@@ -133,6 +133,28 @@ function BalancesForm(props) {
 
   };
 
+  const copyDataToClipboard = () => {
+    const _storedAssets = JSON.parse(localStorage.getItem('assets'));
+    const _storedUsdtPrices = JSON.parse(localStorage.getItem('usdtPrices'));
+    const _storedInitial = JSON.parse(localStorage.getItem('initialBalances'));
+    const _storedFinal = JSON.parse(localStorage.getItem('finalBalances'));
+
+    const dataToCopy = { ...exampleData };
+    dataToCopy.assets = _storedAssets;
+    dataToCopy.usdtPrices = _storedUsdtPrices;
+    dataToCopy.initialBalances = _storedInitial;
+    dataToCopy.finalBalances = _storedFinal;
+
+    window.navigator.clipboard.writeText(JSON.stringify(dataToCopy))
+        .then(() => {
+            alert('Copied to clipboard!'); // Notify user
+        })
+        .catch(err => {
+            console.error('Failed to copy: ', err);
+            alert('Copy failed!'); // Notify user of failure
+        });
+  };
+
   return html`
   <div class="container">
     <h1 class="text-center mt-5 mb-5">Balance Compare</h1>
@@ -225,6 +247,11 @@ function BalancesForm(props) {
     <div class="row m-2">
       <textarea class="form-control" id="initial-data" rows="3" placeholder="Paste saved data here with this format:\n\n${JSON.stringify(exampleData)}"
         onPaste=${(ev) => pasteSavedData(ev)}></textarea>
+    </div>
+    <div class="row text-center">
+      <div class="col align-self-center">
+        <button class="btn btn-primary" onClick=${copyDataToClipboard}>Copy data to clipboard</button>
+      </div>
     </div>
   </div>
   `
