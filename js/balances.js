@@ -191,8 +191,7 @@ function BalancesForm(props) {
       </tbody>
     </table>
     <div class="row m-2">
-      <label for="initial-data" class="form-label m-0 p-0 text-secondary">Raw balances data</label>
-      <textarea class="form-control" id="initial-data" rows="3" placeholder="Paste here with this format:\n\n${JSON.stringify(exampleData)}"></textarea>
+      <textarea class="form-control" id="initial-data" rows="3" placeholder="Paste saved data here with this format:\n\n${JSON.stringify(exampleData)}"></textarea>
     </div>
   </div>
   `
