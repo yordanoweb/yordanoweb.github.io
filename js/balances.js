@@ -244,13 +244,26 @@ function BalancesForm(props) {
         </tr>
       </tbody>
     </table>
-    <div class="row m-2">
-      <textarea class="form-control" id="initial-data" rows="3" placeholder="Paste saved data here with this format:\n\n${JSON.stringify(exampleData)}"
-        onPaste=${(ev) => pasteSavedData(ev)}></textarea>
-    </div>
-    <div class="row text-center">
-      <div class="col align-self-center">
-        <button class="btn btn-primary" onClick=${copyDataToClipboard}>Copy data to clipboard</button>
+    <div class="row p-3">
+      <div class="accordion">
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              Save/Restore balances data
+            </button>
+          </h2>
+          <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              <div class="row">
+                <textarea class="form-control" id="initial-data" rows="3" placeholder="Paste saved data here with this format:\n\n${JSON.stringify(exampleData)}"
+                  onPaste=${(ev) => pasteSavedData(ev)}></textarea>
+              </div>
+              <div class="mt-3 col text-center align-self-center">
+                <button class="btn btn-primary" onClick=${copyDataToClipboard}>Copy current data to clipboard</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
