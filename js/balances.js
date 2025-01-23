@@ -170,7 +170,14 @@ function BalancesForm(props) {
       .then(allCoins => {
         return allCoins.filter((c) => storedCoins.includes(c.id));
       })
-      .then(console.log)
+      .then(filteredCoins => {
+        const coinIds = filteredCoins.map(coin => coin.id);
+        return fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${coinIds.join(',')}&vs_currencies=usd`);
+      })
+      .then(response => response.json())
+      .then(prices => {
+        console.log(prices);
+      })
       .catch(error => console.error('Error:', error));
 
     // Optional: Any cleanup code
