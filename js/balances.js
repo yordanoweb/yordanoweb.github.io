@@ -1,9 +1,11 @@
 function BalancesForm(props) {
+  const defaultCoins = ['binancecoin', 'bitcoin', 'ethereum'];
   const defaultAssets = ['BNB', 'Asset1', 'Asset2', 'Asset3'];
   const defaultUsdtPrices = ['0', '0', '0', '0'];
   const defaultInitial = ['0', '0', '0', '0'];
   const defaultFinal = ['0', '0', '0', '0'];
 
+  const storedCoins = localStorage.getItem('coins') ? localStorage.getItem('coins') : defaultCoins;
   const storedAssets = localStorage.getItem('assets');
   const storedUsdtPrices = localStorage.getItem('usdtPrices');
   const storedInitial = localStorage.getItem('initialBalances');
@@ -95,6 +97,7 @@ function BalancesForm(props) {
   const round8 = round(8);
 
   const exampleData = {
+    "coins": ["binancecoin", "bitcoin", "ethereum"],
     "assets": ["BNB","BTC","ETH","USDT"],
     "usdtPrices": [0,0,0,0],
     "initialBalances": [0,0,0,0],
@@ -102,7 +105,7 @@ function BalancesForm(props) {
   };
 
   const pasteSavedData = (ev) => {
-    const expectedProperties = ['assets', 'usdtPrices', 'initialBalances', 'finalBalances'];
+    const expectedProperties = ['coins', 'assets', 'usdtPrices', 'initialBalances', 'finalBalances'];
     const rawJSON = ev.clipboardData.getData("text");
     let parsedJSON;
 
@@ -126,6 +129,7 @@ function BalancesForm(props) {
     }
 
     // Save the new state
+    localStorage.setItem('coins', JSON.stringify(parsedJSON.coins));
     localStorage.setItem('assets', JSON.stringify(parsedJSON.assets));
     localStorage.setItem('usdtPrices', JSON.stringify(parsedJSON.usdtPrices));
     localStorage.setItem('initialBalances', JSON.stringify(parsedJSON.initialBalances));
@@ -134,6 +138,7 @@ function BalancesForm(props) {
   };
 
   const copyDataToClipboard = () => {
+    const _storedCoins = JSON.parse(localStorage.getItem('coins'));
     const _storedAssets = JSON.parse(localStorage.getItem('assets'));
     const _storedUsdtPrices = JSON.parse(localStorage.getItem('usdtPrices'));
     const _storedInitial = JSON.parse(localStorage.getItem('initialBalances'));
@@ -154,6 +159,24 @@ function BalancesForm(props) {
             alert('Copy failed!'); // Notify user of failure
         });
   };
+
+  // Fetch current live prices for more accurate calcs
+  _useEffect(() => {
+
+    const symbolsToFind = assets.map((c) => c.toLowerCase()).filter((c) => c !== 'usdt');
+
+    fetch('https://api.coingecko.com/api/v3/coins/list')
+      .then(response => response.json())
+      .then(allCoins => {
+        return allCoins.filter((c) => storedCoins.includes(c.id));
+      })
+      .then(console.log)
+      .catch(error => console.error('Error:', error));
+
+    // Optional: Any cleanup code
+    return () => {};
+
+  }, []);
 
   return html`
   <div class="container">
