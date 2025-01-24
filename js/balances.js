@@ -5,16 +5,23 @@ function BalancesForm(props) {
   const defaultInitial = ['0', '0', '0', '0'];
   const defaultFinal = ['0', '0', '0', '0'];
 
-  const storedCoins = localStorage.getItem('coins') ? localStorage.getItem('coins') : defaultCoins;
+  const storedCoins = localStorage.getItem('coins');
   const storedAssets = localStorage.getItem('assets');
   const storedUsdtPrices = localStorage.getItem('usdtPrices');
   const storedInitial = localStorage.getItem('initialBalances');
   const storedFinal = localStorage.getItem('finalBalances');
 
+  const [coins, setCoins] = storedCoins ? _useState(JSON.parse(storedCoins)) : _useState(defaultCoins);
   const [assets, setAssets] = storedAssets ? _useState(JSON.parse(storedAssets)) : _useState(defaultAssets);
   const [usdtPrices, setUsdtPrices] = storedUsdtPrices ? _useState(JSON.parse(storedUsdtPrices)) : _useState(defaultUsdtPrices);
   const [initialBalances, setInitialBalances] = storedInitial ? _useState(JSON.parse(storedInitial)) : _useState(defaultInitial);
   const [finalBalances, setFinalBalances] = storedFinal ? _useState(JSON.parse(storedFinal)) : _useState(defaultFinal);
+
+  // Optionally validate the parsed coins 
+  if (!Array.isArray(coins)) {
+    console.error("Parsed coins should be an array");
+    setCoins(defaultCoins);
+  }
 
   // Optionally validate the parsed assets
   if (!Array.isArray(assets)) {
