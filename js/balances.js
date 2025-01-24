@@ -119,7 +119,7 @@ function BalancesForm(props) {
     const objectCorrectlyFormatted = expectedProperties.reduce((acc, prop) => {
       const propertyExists = prop in parsedJSON;
       const isArray = Array.isArray(parsedJSON[prop]);
-      const hasLengthFour = isArray && parsedJSON[prop].length === 4;
+      const hasLengthFour = isArray && parsedJSON[prop].length >= 3;
       return acc && propertyExists && isArray && hasLengthFour;
     }, true);
 
