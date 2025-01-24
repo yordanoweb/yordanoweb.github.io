@@ -97,7 +97,7 @@ function BalancesForm(props) {
   const round8 = round(8);
 
   const exampleData = {
-    "coins": ["binancecoin", "bitcoin", "ethereum", ""],
+    "coins": ["binancecoin", "bitcoin", "ethereum"],
     "assets": ["BNB","BTC","ETH","USDT"],
     "usdtPrices": [0,0,0,0],
     "initialBalances": [0,0,0,0],
